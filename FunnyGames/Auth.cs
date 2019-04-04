@@ -78,9 +78,9 @@ namespace FunnyGames
              button1.Enabled = button2.Enabled = true;
         }
 
-        private void Auth_FormClosing(object sender, FormClosingEventArgs e)
+        private void Auth_FormClosed(object sender, FormClosedEventArgs e)
         {
-            label2.Text = label3.Text = String.Empty;           
+            label2.Text = label3.Text = String.Empty;
             context.Dispose();
         }
     }

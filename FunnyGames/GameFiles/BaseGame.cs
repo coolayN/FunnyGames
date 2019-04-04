@@ -18,7 +18,7 @@ namespace Game2.GameFiles
         {
             Name = name;
         }       
-        public abstract void FirstPlayerMove();
+        public abstract void FirstPlayerMove(string min, string max, string number);
         public abstract void SecondPlayerMove();
         public abstract void EndGame();
     }

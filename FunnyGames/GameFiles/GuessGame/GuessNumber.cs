@@ -18,23 +18,31 @@ namespace Game2.GameFiles
         private int CurrentAttemptCount { get; set; }
         bool IsWin { get; set; }
 
-        public GuessNumber(Player player1, Player player2):base("GuessNumber")
+        public GuessNumber(IEnumerable<Player> players):base("GuessNumber")
         {
-            Player1 = player1;
-            Player2 = player2;
+            if (players.Count() < 1 || players.Count() > 2)
+                throw new ArgumentException();
+
+            if (players.Count() == 2)
+            {
+                Player1 = players.First();
+                Player2 = players.Last();
+            }
+            else
+            {
+                Player1 = players.First();
+                Player2 = new Player();///!!!!!!!!!!!!!
+            }
         }
 
-        public override void FirstPlayerMove()
+        public override void FirstPlayerMove(string min, string max, string number)
         {
-            Console.WriteLine($"{Player1.Login}, set min, max and your number\n" +
-                "enter the Min value:");
-            MinValue = IntReader();
+            MinValue = IntReader(min);
 
-            Console.WriteLine("Enter the max value:");
-            MaxValue = IntReader(new MinValueValidator(MinValue));
+            MaxValue = IntReader(max, new MinValueValidator(MinValue));
 
             Console.WriteLine("Enter the value:");
-            Value = IntReader(new MinMaxValueValidator(MinValue, MaxValue));
+            Value = IntReader(number, new MinMaxValueValidator(MinValue, MaxValue));
             MaxAttemptCount = CalculateAttemptCount();
         }      
 
@@ -78,26 +86,15 @@ namespace Game2.GameFiles
             }
         }
 
-        private int IntReader(IValidator<int> validaror = null)
+        private int IntReader(string num, IValidator<int> validaror = null)
         {
             int value;
-            bool valueIsValid = false;
-            do
-            {
-                var line = Console.ReadLine();
-                valueIsValid = int.TryParse(line, out value);
 
-                if (validaror != null)
-                {
-                    valueIsValid = validaror.Validate(value);
-                    if (!valueIsValid)
-                    {
-                        Console.WriteLine(validaror.Error + "\nTry again");
-                    }
-                }
-            }
-            while (!
-            valueIsValid);
+             if(!int.TryParse(num, out value))
+                throw new Exception("It's not a number!");
+
+             if (validaror != null && !validaror.Validate(value))
+                throw new Exception(validaror.Error);       
 
             return value;
         }

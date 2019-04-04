@@ -27,7 +27,7 @@ namespace FunnyGames
             radioButton1.Text = "1 Player";
             radioButton2.Text = "2 Players";
             radioButton1.Select();
-            button1.Text = "Select";
+            button1.Text = "Start";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,7 +59,10 @@ namespace FunnyGames
                 }
                 while (tryAgain);
                 players.Add(auth.player);
-            }           
+            }
+
+            GameForm gameForm = new GameForm(players);
+            gameForm.ShowDialog();
         }
     }
 }

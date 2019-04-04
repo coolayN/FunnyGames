@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dal.Models;
+using Game2.GameFiles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +12,14 @@ using System.Windows.Forms;
 
 namespace FunnyGames
 {
-    public partial class GameMenu : Form
+    public partial class GameForm : Form
     {
-        public GameMenu()
+        GuessNumber game;
+
+        public GameForm(IEnumerable<Player> players)
         {
             InitializeComponent();
+            game = new GuessNumber(players);
         }
     }
 }
