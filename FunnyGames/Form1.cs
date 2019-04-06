@@ -1,4 +1,5 @@
 ﻿using Dal.Models;
+using FunnyGames.GameFiles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +14,8 @@ namespace FunnyGames
 {
     public partial class Form1 : Form
     {
-        List<Player> players = new List<Player>();
+        public List<Player> players = new List<Player>();
         int playersCount;
-
         public Form1()
         {
             InitializeComponent();
@@ -28,41 +28,69 @@ namespace FunnyGames
             radioButton2.Text = "2 Players";
             radioButton1.Select();
             button1.Text = "Start";
+            checkBox1.Text = "Without authorization";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
-                playersCount = 1;
-            if (radioButton2.Checked)
-                playersCount = 2;
-
-            for (int i = 1; i <= playersCount; i++)
+            if (players.Count == 0)
             {
-                bool tryAgain;
-                Auth auth = new Auth(i);
-                do
+                if (radioButton1.Checked)
+                    playersCount = 1;
+                if (radioButton2.Checked)
+                    playersCount = 2;
+
+                if (checkBox1.Checked)
                 {
-                    tryAgain = false;
-                    auth.ShowDialog();
-                    if (auth.player == null)
+                    for (int i = 1; i <= playersCount; i++)
                     {
-                        DialogResult result = MessageBox.Show("Try again?", "authorization failed", MessageBoxButtons.YesNo);
-                        if (result == DialogResult.Yes)
-                            tryAgain = true;
-                        else
-                        {
-                            players = new List<Player>();                           
-                            return;
-                        }
+                        players.Add(new Player() { Login = $"Player{i}", Stat = new Statistics() });
                     }
                 }
-                while (tryAgain);
-                players.Add(auth.player);
+                else
+                {
+                    for (int i = 1; i <= playersCount; i++)
+                    {
+                        bool tryAgain;
+                        Auth auth = new Auth(i);
+                        do
+                        {
+                            tryAgain = false;
+                            auth.ShowDialog();
+                            if (auth.player == null)
+                            {
+                                DialogResult result = MessageBox.Show("Try again?", "authorization failed", MessageBoxButtons.YesNo);
+                                if (result == DialogResult.Yes)
+                                    tryAgain = true;
+                                else
+                                {
+                                    players = new List<Player>();
+                                    return;
+                                }
+                            }
+                        }
+                        while (tryAgain);
+                        players.Add(auth.player);
+                    }
+                }
+            }
+            else
+            {
+                players.Reverse();
+            }
+            if(players.Count==1)
+            {
+                SelectLevelForm selectForm = new SelectLevelForm();
+                selectForm.Owner = this;
+                selectForm.ShowDialog();              
+            }
+            if(players.Count==2)
+            {
+                PlayerSetValuesForm form = new PlayerSetValuesForm();
+                form.Owner = this;
+                form.ShowDialog();
             }
 
-            GameForm gameForm = new GameForm(players);
-            gameForm.ShowDialog();
         }
     }
 }

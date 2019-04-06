@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dal">
-      <HintPath>..\Dal\bin\Debug\Dal.dll</HintPath>
+    <Reference Include="Dal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Dal.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -56,10 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth.cs">
+    <Compile Include="GameFiles\PlayerSetValuesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Auth.Designer.cs">
+    <Compile Include="GameFiles\PlayerSetValuesForm.Designer.cs">
+      <DependentUpon>PlayerSetValuesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameFiles\SelectLevelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameFiles\SelectLevelForm.Designer.cs">
+      <DependentUpon>SelectLevelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameFiles\ValueSetters\AutoValSetter.cs" />
+    <Compile Include="GameFiles\ValueSetters\BaseStartValSetter.cs" />
+    <Compile Include="GameFiles\ValueSetters\PlayerValSetter.cs" />
+    <Compile Include="HelpClasses\EventArgsClasses\InfoEventArgs.cs" />
+    <Compile Include="HelpClasses\TextboxValidators.cs" />
+    <Compile Include="HelpClasses\Validators\StringIsNumberValidator.cs" />
+    <Compile Include="Аuthorization\Auth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Аuthorization\Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
@@ -68,13 +87,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameFiles\BaseGame.cs" />
     <Compile Include="GameFiles\GuessGame\GuessNumber.cs" />
-    <Compile Include="GameFiles\playground.cs" />
-    <Compile Include="GameForm.cs">
+    <Compile Include="GameFiles\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameForm.Designer.cs">
+    <Compile Include="GameFiles\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HelpClasses\Validators\IValidator.cs" />
@@ -82,13 +99,19 @@
     <Compile Include="HelpClasses\Validators\MinValueValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Auth.resx">
+    <EmbeddedResource Include="GameFiles\PlayerSetValuesForm.resx">
+      <DependentUpon>PlayerSetValuesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameFiles\SelectLevelForm.resx">
+      <DependentUpon>SelectLevelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Аuthorization\Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GameForm.resx">
+    <EmbeddedResource Include="GameFiles\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

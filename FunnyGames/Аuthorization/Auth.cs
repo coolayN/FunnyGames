@@ -11,18 +11,20 @@ using Dal.Helpers;
 using Dal.Models;
 using Dal.Repository;
 
+
 namespace FunnyGames
 {
     public partial class Auth : Form
     {
+       
         public Player player { get; set; } = null;
         PlayerContext context;
         int number;
-
         public Auth(int plNumb)
         {
             InitializeComponent();
             number = plNumb;
+ 
         }
 
         private void Auth_Load(object sender, EventArgs e)
@@ -81,7 +83,7 @@ namespace FunnyGames
         private void Auth_FormClosed(object sender, FormClosedEventArgs e)
         {
             label2.Text = label3.Text = String.Empty;
-            context.Dispose();
+            //context.Dispose();
         }
     }
 }

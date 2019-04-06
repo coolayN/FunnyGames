@@ -25,12 +25,12 @@ namespace Game2.HelpClasses.Validator
                 IsValid = true;
                 if (value < _minValue)
                 {
-                    Error = ($"Number must be more than {_minValue}");
+                    Error = ($"-{value}- Number must be more than {_minValue}");
                     IsValid = false;
                 }
                 if (value > _maxValue)
                 {
-                    Error = ($"Number must be less than {_maxValue}");
+                    Error = ($"-{value}- Number must be less than {_maxValue}");
                     IsValid = false;
                 }
 

@@ -14,16 +14,15 @@ namespace Dal.Helpers
         {
             if (String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password))
                 throw new ArgumentException("Incorrect input data");
-
             Player player = null;
-             
-                player = context.Players.SingleOrDefault(p => p.Login == login);
-                if (player is null)
-                    throw new Exception("Player with this login is not registered");
 
-                string passwordInput = PasswordGenerator.GetPasswordHash(password, player.Salt);
-                if(player.Password!=passwordInput)
-                    throw new Exception("The Password is incorrect");
+            player = context.Players.SingleOrDefault(p => p.Login == login);
+            if (player is null)
+                throw new Exception("Player with this login is not registered");
+
+            string passwordInput = PasswordGenerator.GetPasswordHash(password, player.Salt);
+            if (player.Password != passwordInput)
+                throw new Exception("The Password is incorrect");
 
             return player;
         }
@@ -33,22 +32,22 @@ namespace Dal.Helpers
             if (String.IsNullOrEmpty(login) || String.IsNullOrEmpty(password))
                 throw new ArgumentException("Incorrect input data");
 
-            Player newPlayer = null;        
+            Player newPlayer = null;
             newPlayer = context.Players.SingleOrDefault(p => p.Login == login);
-                if (newPlayer != null)
-                throw new Exception("Player with this login is already registered");           
+            if (newPlayer != null)
+                throw new Exception("Player with this login is already registered");
 
             string salt = PasswordGenerator.GenerateSalt();
             string passwordHash = PasswordGenerator.GetPasswordHash(password, salt);
             newPlayer = new Player { Login = login, Password = passwordHash, Salt = salt };
-            Statistics newPlayerStatistics = new Statistics { Id = newPlayer.Id, LoseGames = 0, WinGames = 0};
+            Statistics newPlayerStatistics = new Statistics { Id = newPlayer.Id, LoseGames = 0, WinGames = 0 };
             context.Players.Add(newPlayer);
-            context.Statistics.Add(newPlayerStatistics);            
+            context.Statistics.Add(newPlayerStatistics);
             context.SaveChanges();
             return newPlayer;
         }
 
-        public static void Save(this PlayerContext context, params Player[] players)
+        public static void SavePlayer(this PlayerContext context, params Player[] players)
         {
             foreach (var player in players)
             {
@@ -58,8 +57,7 @@ namespace Dal.Helpers
                 stat.WinGames = player.Stat.WinGames;
                 context.Entry(stat).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
-            }            
+            }
         }
-
     }
 }
